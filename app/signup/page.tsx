@@ -16,10 +16,10 @@ export default function SignUpPage() {
   const v = state.values;
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
-        <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">สมัครสมาชิก</h1>
-
+<main className="flex min-h-screen items-center justify-center px-4">
+  <div className="notebook lined w-full max-w-md p-8 pl-[4.5rem]">
+    <div className="tape" />
+    <h1 className="mb-6 text-center font-hand text-3xl text-gray-800">📒 สมัครสมาชิก</h1>
         <form action={action} className="space-y-4">
           <div>
             <label htmlFor="name" className={label}>ชื่อ</label>

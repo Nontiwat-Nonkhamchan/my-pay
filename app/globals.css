@@ -1,1 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Sriracha&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Mali", ui-sans-serif, system-ui, sans-serif;
+  --font-hand: "Sriracha", "Mali", cursive;
+
+  /* เทา -> น้ำตาลกระดาษ */
+  --color-white: #fffdf6;
+  --color-gray-50: #faf5e8;
+  --color-gray-100: #f3ead8;
+  --color-gray-200: #e6dac1;
+  --color-gray-300: #d2c3a3;
+  --color-gray-400: #b3a283;
+  --color-gray-500: #8c7b60;
+  --color-gray-600: #6f5f48;
+  --color-gray-700: #55473a;
+  --color-gray-800: #43372b;
+  --color-gray-900: #2f261c;
+
+  /* น้ำเงิน -> หมึกปากกา, เหลือง -> ปากกาเน้นข้อความ, แดง -> ตรายาง */
+  --color-blue-100: #dce6f4;
+  --color-blue-500: #3b5da6;
+  --color-blue-600: #2e4a86;
+  --color-blue-700: #23396b;
+  --color-yellow-500: #e0a93b;
+  --color-yellow-600: #c48f27;
+  --color-red-600: #b83a2e;
+  --color-red-700: #962d23;
+}
+
+body {
+  color: var(--color-gray-900);
+  background-color: #efe4cc;
+  background-image: radial-gradient(rgba(120, 90, 50, 0.08) 1px, transparent 1px);
+  background-size: 6px 6px;
+}
+
+/* หน้ากระดาษสมุด: เส้นขอบแดงด้านซ้าย + รูเข้าเล่ม + ขอบกระดาษซ้อนกัน */
+.notebook {
+  position: relative;
+  background-color: #fffdf6;
+  background-image: linear-gradient(
+    to right,
+    transparent 0 3.5rem,
+    #e6a1a1 3.5rem 3.55rem,
+    transparent 3.55rem
+  );
+  border-radius: 6px 14px 14px 6px;
+  box-shadow:
+    2px 3px 0 #f0e6cf,
+    4px 6px 0 #e2d6bb,
+    10px 16px 28px rgba(80, 55, 20, 0.2);
+}
+.notebook::before {
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  top: 1.2rem;
+  bottom: 1.2rem;
+  width: 1.2rem;
+  background: radial-gradient(circle at center, #cfc3a6 0 5px, #a99c80 5.5px 6.5px, transparent 7px)
+    0 0 / 1.2rem 2.6rem repeat-y;
+  pointer-events: none;
+}
+
+/* เพิ่มเส้นบรรทัดแบบสมุดเส้น */
+.notebook.lined {
+  background-image:
+    linear-gradient(to right, transparent 0 3.5rem, #e6a1a1 3.5rem 3.55rem, transparent 3.55rem),
+    repeating-linear-gradient(to bottom, transparent 0 31px, #d6e2ee 31px 32px);
+}
+
+/* เทปกาวติดกระดาษ */
+.tape {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 110px;
+  height: 28px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(240, 200, 110, 0.65);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* ปากกาไฮไลต์ */
+.highlight {
+  background: linear-gradient(transparent 55%, rgba(255, 226, 89, 0.75) 55%);
+  padding: 0 0.2rem;
+}
+
+/* ปุ่มสติกเกอร์ มีเงาแข็ง กดแล้วยุบ */
+.btn-sticker {
+  box-shadow: 2px 2px 0 rgba(60, 40, 10, 0.35);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.btn-sticker:hover {
+  transform: translate(-1px, -1px) rotate(-1deg);
+}
+.btn-sticker:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* ช่องกรอกข้อมูลให้เหมือนเขียนบนกระดาษ (ไม่อยู่ใน @layer จึงทับ utility ได้) */
+input,
+select,
+textarea {
+  background-color: #fffef9;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 4px;
+  font-family: inherit;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-blue-600);
+  outline: 2px dashed rgba(46, 74, 134, 0.35);
+  outline-offset: 2px;
+}
