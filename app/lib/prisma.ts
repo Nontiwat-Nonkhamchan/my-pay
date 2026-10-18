@@ -1,10 +1,17 @@
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/app/generated/prisma/client";
 
-const adapter = new PrismaBetterSqlite3({
-  url: process.env.DATABASE_URL!,
-});
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-const prisma = new PrismaClient({ adapter });
+function createClient() {
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL,
+  });
+  return new PrismaClient({ adapter });
+}
+
+// ใช้ client ตัวเดียวตอน dev ไม่ให้เปิดการเชื่อมต่อใหม่ทุกครั้งที่ hot reload
+const prisma = globalForPrisma.prisma ?? createClient();
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export default prisma;
