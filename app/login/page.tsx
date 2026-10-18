@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import LoginForm from "./login-form";
-import { googleLogin } from "./actions";
 
 async function RegisteredNotice({
   searchParams,
@@ -32,16 +31,6 @@ export default function LoginPage({
         </Suspense>
 
         <LoginForm />
-
-        <p className="my-4 text-center text-sm text-gray-500">หรือ</p>
-        <form action={googleLogin}>
-          <button
-            type="submit"
-            className="w-full rounded border border-gray-300 bg-white p-2 font-medium text-gray-700 hover:bg-gray-50"
-          >
-            เข้าสู่ระบบด้วย Google
-          </button>
-        </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
           ยังไม่มีบัญชี?{" "}
