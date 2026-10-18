@@ -22,8 +22,6 @@ type PageProps = {
   }>;
 };
 
-// แปลงข้อความ YYYY-MM-DD เป็น Date (ถ้ารูปแบบผิดให้ข้ามไป)
-// ตอนบันทึก วันที่เก็บเป็นเวลา 00:00 UTC จึงกรองด้วย UTC เหมือนกัน
 function parseDate(value?: string, endOfDay = false) {
   if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return undefined;
   const d = new Date(value + (endOfDay ? "T23:59:59.999Z" : "T00:00:00.000Z"));
@@ -63,13 +61,14 @@ export default async function ExpensesPage({ searchParams }: PageProps) {
 
   const total = expenses.reduce((sum, e) => sum + e.amount, 0);
 
-  return (
-    <main className="mx-auto max-w-5xl p-6">
+return (
+  <main className="mx-auto max-w-5xl p-6">
+    <div className="notebook py-8 pr-6 pl-[4.5rem]">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">สมุดรายจ่าย</h1>
+        <h1 className="font-hand text-4xl text-gray-900">📒 สมุดรายจ่าย</h1>
         <p className="mt-2 text-gray-600">
           {isFiltered ? "พบ" : "ทั้งหมด"} {expenses.length} รายการ · ยอดรวม{" "}
-          <strong>{baht.format(total)}</strong>
+          <strong className="highlight">{baht.format(total)}</strong>
         </p>
       </div>
 
@@ -77,41 +76,41 @@ export default async function ExpensesPage({ searchParams }: PageProps) {
 
       <a
         href="/expenses/create"
-        className="mb-4 inline-block rounded bg-blue-600 px-6 py-2.5 text-sm font-medium text-white shadow-md hover:bg-blue-700"
+        className="btn-sticker mb-4 inline-block rounded bg-blue-600 px-6 py-2.5 text-sm font-medium text-white"
       >
-        เพิ่มรายการ
+        ✏️ เพิ่มรายการ
       </a>
 
-      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-3 font-semibold">วันที่</th>
-              <th className="px-4 py-3 font-semibold">รายการ</th>
-              <th className="px-4 py-3 font-semibold">หมวดหมู่</th>
-              <th className="px-4 py-3 text-right font-semibold">จำนวนเงิน</th>
-              <th className="px-4 py-3 font-semibold">หมายเหตุ</th>
-              <th className="px-4 py-3 font-semibold">จัดการ</th>
+          <thead>
+            <tr className="border-b-2 border-gray-300">
+              <th className="px-4 py-3 font-hand text-base font-normal text-gray-700">วันที่</th>
+              <th className="px-4 py-3 font-hand text-base font-normal text-gray-700">รายการ</th>
+              <th className="px-4 py-3 font-hand text-base font-normal text-gray-700">หมวดหมู่</th>
+              <th className="px-4 py-3 text-right font-hand text-base font-normal text-gray-700">จำนวนเงิน</th>
+              <th className="px-4 py-3 font-hand text-base font-normal text-gray-700">หมายเหตุ</th>
+              <th className="px-4 py-3 font-hand text-base font-normal text-gray-700">จัดการ</th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-dashed divide-gray-300">
             {expenses.map((e) => (
               <tr key={e.id} className="hover:bg-gray-50">
                 <td className="px-4 py-3">{dateFmt.format(e.spentAt)}</td>
                 <td className="px-4 py-3 font-medium">{e.title}</td>
                 <td className="px-4 py-3">
-                  <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
+                  <span className="inline-block -rotate-2 rounded-full border border-dashed border-blue-600/40 bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
                     {e.category}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-right">{baht.format(e.amount)}</td>
+                <td className="px-4 py-3 text-right font-semibold">{baht.format(e.amount)}</td>
                 <td className="px-4 py-3 text-gray-600">{e.note ?? "-"}</td>
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
                     <a
                       href={`/expenses/${e.id}/edit`}
-                      className="rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-yellow-600"
+                      className="btn-sticker rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white"
                     >
                       แก้ไข
                     </a>
@@ -131,6 +130,7 @@ export default async function ExpensesPage({ searchParams }: PageProps) {
           </tbody>
         </table>
       </div>
-    </main>
-  );
+    </div>
+  </main>
+);
 }
